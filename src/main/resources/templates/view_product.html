@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="container card-sh" style="margin-top: 70px;margin-bottom: 100px">
+
+			<div class="col-md-12 p-5">
+				<div class="row">
+					<div class="col-md-6 text-end">
+						<img alt="" src="/img/product_img/laptop.jpg" width="330px"
+							height="400px">
+					</div>
+
+					<div class="col-md-6">
+
+						<p class="fs-3">Laptop</p>
+						<p>
+							<span class="fw-bold">Description : </span><br>Hp Laptop,
+							256Gb SSD
+						</p>
+						<p>
+							<span class="fw-bold"> Product Details: </span> <br>Status :
+							<span class="badge bg-success">Available</span> <span
+								class="badge bg-warning">out of stock</span> <br> Category
+							: Laptop<br> Policy : 7 Days Replacement & Return
+
+						</p>
+						<p class="fs-5 fw-bold">
+							Price :&nbsp; &nbsp; &nbsp; &nbsp;<i class="fas fa-rupee-sign"></i>
+							7000 <span
+								class="fs-6 text-decoration-line-through text-secondary">14000</span>
+							<span class="fs-6  text-success">50% off</span>
+						</p>
+
+						<div class="row">
+							<div class="col-md-4 text-success text-center p-2">
+								<i class="fas fa-money-bill-wave fa-2x"></i>
+								<p>Cash On Delivery</p>
+							</div>
+							<div class="col-md-4 text-danger text-center p-2">
+								<i class="fas fa-undo-alt fa-2x"></i>
+								<p>Return Available</p>
+							</div>
+							<div class="col-md-4 text-primary text-center p-2">
+								<i class="fas fa-truck-moving fa-2x"></i>
+								<p>Free Shipping</p>
+							</div>
+						</div>
+
+						<a href="login.jsp" class="btn btn-danger col-md-12">Add To Cart</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</section>
+</body>
+</html>

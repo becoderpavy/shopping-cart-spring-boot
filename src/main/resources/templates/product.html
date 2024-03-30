@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="container-fluid bg-primary p-5 mt-5 ">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<form>
+						<div class="input-group">
+							<input type="text" class="form-control" name="ch">
+							<button class="btn btn-light text-dark ms-3 col-md-2">
+								<i class="fa-solid fa-magnifying-glass"></i> Search
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="container-fluid mt-1">
+			<div class="row">
+
+				<div class="col-md-2 p-0">
+
+					<div class="card shadow-sm p-0 mb-5 bg-body-tertiary rounded">
+						<div class="card-body">
+							<div class="list-group">
+								<a href="#"
+									class="list-group-item list-group-item-action active"
+									aria-current="true"> Categories </a> <a href="#"
+									class="list-group-item list-group-item-action">Electronics</a>
+								<a href="#" class="list-group-item list-group-item-action">Mobile
+									Phone</a> <a href="#"
+									class="list-group-item list-group-item-action">Clothers</a>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-10">
+					<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+						<div class="card-body">
+							<p class="fs-3 text-center">Products</p>
+							<div class="row">
+								<div class="col-md-3">
+									<div class="card">
+										<div class="card-body ">
+											<img alt="" src="/img/product_img/laptop.jpg" width="100%"
+												height="150px">
+											<p class="fs-5 text-center">Laptop</p>
+											<div class="row text-center">
+												<p class="fs-6 fw-bold">
+													&#8377; 500 <span class="fs-6 text-success">20% off
+													</span>
+												</p>
+												<a href="/product" class="btn btn-primary col-md-6 offset-md-3">View
+													Details</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- TODO : Remove after backend implement  -->
+								<div class="col-md-3">
+									<div class="card">
+										<div class="card-body ">
+											<img alt="" src="/img/product_img/laptop.jpg" width="100%"
+												height="150px">
+											<p class="fs-5 text-center">Laptop</p>
+											<div class="row text-center">
+												<p class="fs-6 fw-bold">
+													&#8377; 500 <span class="fs-6 text-success">20% off
+													</span>
+												</p>
+												<a class="btn btn-primary col-md-6 offset-md-3">View
+													Details</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="card">
+										<div class="card-body ">
+											<img alt="" src="/img/product_img/laptop.jpg" width="100%"
+												height="150px">
+											<p class="fs-5 text-center">Laptop</p>
+											<div class="row text-center">
+												<p class="fs-6 fw-bold">
+													&#8377; 500 <span class="fs-6 text-success">20% off
+													</span>
+												</p>
+												<a class="btn btn-primary col-md-6 offset-md-3">View
+													Details</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="card">
+										<div class="card-body ">
+											<img alt="" src="/img/product_img/laptop.jpg" width="100%"
+												height="150px">
+											<p class="fs-5 text-center">Laptop</p>
+											<div class="row text-center">
+												<p class="fs-6 fw-bold">
+													&#8377; 500 <span class="fs-6 text-success">20% off
+													</span>
+												</p>
+												<a class="btn btn-primary col-md-6 offset-md-3">View
+													Details</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- End  -->
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</section>
+</body>
+</html>
