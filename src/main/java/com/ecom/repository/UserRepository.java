@@ -6,4 +6,6 @@ import com.ecom.model.UserDtls;
 
 public interface UserRepository extends JpaRepository<UserDtls, Integer> {
 
+	UserDtls findByEmail(String email);
+
 }
