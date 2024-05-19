@@ -14,39 +14,49 @@
 				</div>
 				<div class="col-md-7 p-2">
 					<div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
-						<div class="card-header">
+						<div class="card-header text-center">
 							<p class="fs-4 text-center">Register</p>
+							<th:block th:if="${session.succMsg}">
+								<p class="text-success fw-bold">[[${session.succMsg}]]</p>
+								<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+							</th:block>
+
+							<th:block th:if="${session.errorMsg}">
+								<p class="text-danger fw-bold">[[${session.errorMsg}]]</p>
+								<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+							</th:block>
 						</div>
 						<div class="card-body">
-							<form>
-
+							<form action="/saveUser" enctype="multipart/form-data"
+								method="post">
 								<div class="row">
 									<div class="col">
-										<label class="form-label">Full Name</label> <input
+										<label class="form-label">Full Name</label> <input required
 											class="form-control" name="name" type="text">
 									</div>
 
 									<div class="col">
 										<label class="form-label">Mobile Number</label> <input
-											class="form-control" name="mobileNumber" type="number">
+											required class="form-control" name="mobileNumber"
+											type="number">
 									</div>
 
 								</div>
 
 								<div class="mb-3">
-									<label class="form-label">Email</label> <input
+									<label class="form-label">Email</label> <input required
 										class="form-control" name="email" type="email">
 								</div>
 
 
 								<div class="row">
 									<div class="col">
-										<label class="form-label">Address</label> <input
+										<label class="form-label">Address</label> <input required
 											class="form-control" name="address" type="text">
 									</div>
 
 									<div class="col">
-										<label class="form-label">City</label> <input
+										<label class="form-label">City</label> <input required
 											class="form-control" name="city" type="text">
 									</div>
 
@@ -54,12 +64,12 @@
 
 								<div class="row">
 									<div class="col">
-										<label class="form-label">State</label> <input
+										<label class="form-label">State</label> <input required
 											class="form-control" name="state" type="text">
 									</div>
 
 									<div class="col">
-										<label class="form-label">Pincode</label> <input
+										<label class="form-label">Pincode</label> <input required
 											class="form-control" name="pincode" type="number">
 									</div>
 
@@ -68,13 +78,14 @@
 
 								<div class="row">
 									<div class="col">
-										<label class="form-label">Password</label> <input
-											class="form-control" name="password" type="text">
+										<label class="form-label">Password</label> <input required
+											class="form-control" name="password" type="password">
 									</div>
 
 									<div class="col">
 										<label class="form-label">Confirm Password</label> <input
-											class="form-control" name="cpassword" type="password">
+											required class="form-control" name="cpassword"
+											type="password">
 									</div>
 
 								</div>
@@ -83,7 +94,7 @@
 
 								<div class="mb-3">
 									<label class="form-label">Profile Image</label> <input
-										class="form-control" name="profile_image" type="file">
+										class="form-control" name="img" type="file">
 								</div>
 
 
