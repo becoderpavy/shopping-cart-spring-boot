@@ -46,7 +46,7 @@ public class HomeController {
 		return "index";
 	}
 
-	@GetMapping("/signin")
+	@GetMapping("/login")
 	public String login() {
 		return "login";
 	}
