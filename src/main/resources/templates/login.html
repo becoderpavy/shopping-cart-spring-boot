@@ -17,12 +17,17 @@
 					<div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
 						<div class="card-header">
 							<p class="fs-4 text-center">Login</p>
+							<div th:if="${param.error}" class="alert alert-danger">
+								Invalid email & Password</div>
+
+							<div th:if="${param.logout}" class="alert alert-success">
+								Logout Sucessfully</div>
 						</div>
 						<div class="card-body">
-							<form>
+							<form action="/login" method="post">
 								<div class="mb-3">
 									<label class="form-label">Email</label> <input
-										class="form-control" name="email" type="email">
+										class="form-control" name="username" type="email">
 								</div>
 
 								<div class="mb-3">
