@@ -190,6 +190,7 @@ public class HomeController {
 			userService.updateUser(userByToken);
 			//session.setAttribute("succMsg", "Password change successfully");
 			m.addAttribute("msg","Password change successfully");
+			
 			return "message";
 		}
 
