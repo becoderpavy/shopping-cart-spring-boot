@@ -31,6 +31,7 @@ import com.ecom.service.CategoryService;
 import com.ecom.service.OrderService;
 import com.ecom.service.ProductService;
 import com.ecom.service.UserService;
+import com.ecom.util.CommonUtil;
 import com.ecom.util.OrderStatus;
 
 import jakarta.servlet.http.HttpSession;
@@ -53,6 +54,9 @@ public class AdminController {
 
 	@Autowired
 	private OrderService orderService;
+
+	@Autowired
+	private CommonUtil commonUtil;
 
 	@ModelAttribute
 	public void getUserDetails(Principal p, Model m) {
@@ -269,7 +273,7 @@ public class AdminController {
 		m.addAttribute("orders", allOrders);
 		return "/admin/orders";
 	}
-	
+
 	@PostMapping("/update-order-status")
 	public String updateOrderStatus(@RequestParam Integer id, @RequestParam Integer st, HttpSession session) {
 
@@ -282,9 +286,15 @@ public class AdminController {
 			}
 		}
 
-		Boolean updateOrder = orderService.updateOrderStatus(id, status);
+		ProductOrder updateOrder = orderService.updateOrderStatus(id, status);
 
-		if (updateOrder) {
+		try {
+			commonUtil.sendMailForProductOrder(updateOrder, status);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (!ObjectUtils.isEmpty(updateOrder)) {
 			session.setAttribute("succMsg", "Status Updated");
 		} else {
 			session.setAttribute("errorMsg", "status not updated");
