@@ -25,6 +25,7 @@ import com.ecom.service.CartService;
 import com.ecom.service.CategoryService;
 import com.ecom.service.OrderService;
 import com.ecom.service.UserService;
+import com.ecom.util.CommonUtil;
 import com.ecom.util.OrderStatus;
 
 import jakarta.servlet.http.HttpSession;
@@ -42,7 +43,6 @@ public class UserController {
 
 	@Autowired
 	private OrderService orderService;
-
 
 	@Autowired
 	private CommonUtil commonUtil;
@@ -122,7 +122,7 @@ public class UserController {
 	}
 
 	@PostMapping("/save-order")
-	public String saveOrder(@ModelAttribute OrderRequest request, Principal p) {
+	public String saveOrder(@ModelAttribute OrderRequest request, Principal p) throws Exception {
 		// System.out.println(request);
 		UserDtls user = getLoggedInUserDetails(p);
 		orderService.saveOrder(user.getId(), request);
@@ -155,18 +155,15 @@ public class UserController {
 			}
 		}
 
-		Boolean updateOrder = orderService.updateOrderStatus(id, status);
-
 		ProductOrder updateOrder = orderService.updateOrderStatus(id, status);
-
+		
 		try {
 			commonUtil.sendMailForProductOrder(updateOrder, status);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-
-		if (updateOrder) {
+		if (!ObjectUtils.isEmpty(updateOrder)) {
 			session.setAttribute("succMsg", "Status Updated");
 		} else {
 			session.setAttribute("errorMsg", "status not updated");
