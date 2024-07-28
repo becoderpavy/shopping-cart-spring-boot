@@ -98,11 +98,16 @@ public class ProductServiceImpl implements ProductService {
 		List<Product> products = null;
 		if (ObjectUtils.isEmpty(category)) {
 			products = productRepository.findByIsActiveTrue();
-		}else {
-			products=productRepository.findByCategory(category);
+		} else {
+			products = productRepository.findByCategory(category);
 		}
 
 		return products;
+	}
+
+	@Override
+	public List<Product> searchProduct(String ch) {
+		return productRepository.findByTitleContainingIgnoreCaseOrCategoryContainingIgnoreCase(ch, ch);
 	}
 
 }
