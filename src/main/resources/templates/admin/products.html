@@ -7,24 +7,46 @@
 </head>
 <body>
 	<section>
-		<div class="container-fluid mt-5 p-5">
+		<div class="container-fluid mt-4 p-3">
+			<div class="row">
+				<p class="text-center fs-3 mt-2">All Products</p>
+				<hr>
+				<a href="/admin/" class="text-decoration-none"><i
+					class="fa-solid fa-arrow-left"></i> Back</a>
+				<th:block th:if="${session.succMsg}">
+					<p class="text-success fw-bold">[[${session.succMsg}]]</p>
+					<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+				</th:block>
 
-			<div class="card card-sh">
-				<div class="card-header text-center">
-					<p class="fs-4">View Products</p>
-					<th:block th:if="${session.succMsg}">
-						<p class="text-success fw-bold">[[${session.succMsg}]]</p>
-						<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
-					</th:block>
+				<th:block th:if="${session.errorMsg}">
+					<p class="text-danger fw-bold">[[${session.errorMsg}]]</p>
+					<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+				</th:block>
 
-					<th:block th:if="${session.errorMsg}">
-						<p class="text-danger fw-bold">[[${session.errorMsg}]]</p>
-						<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
-					</th:block>
+				<th:block th:if="${session.errorMsg}">
+					<p class="text-danger fw-bold text-center">[[${session.errorMsg}]]</p>
+					<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+				</th:block>
+				<div class="col-md-4 p-3">
+
+					<form action="/admin/products" method="get">
+						<div class="row">
+							<div class="col">
+								<input type="text" class="form-control " name="ch">
+							</div>
+							<div class="col">
+								<button class="btn btn-primary col">Search</button>
+							</div>
+						</div>
+					</form>
+
 				</div>
-				<div class="card-body">
-					<table class="table">
-						<thead>
+
+
+				<!-- <div class="card card-sh">-->
+				<div class="p-3">
+					<table class="table table-bordered">
+						<thead class="table-light ">
 							<tr>
 								<th scope="col">Sl No</th>
 								<th scope="col">Image</th>
@@ -63,7 +85,7 @@
 				</div>
 			</div>
 		</div>
-
+		<!-- 	</div> -->
 	</section>
 </body>
 </html>
