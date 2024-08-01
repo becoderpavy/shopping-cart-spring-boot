@@ -82,10 +82,9 @@
 										<td><img
 											th:src="@{'/img/category_img/'+${cat.imageName}}"
 											width="50px" height="50px"></td>
-										<td><a th:href="@{'/admin/loadEditCategory/'+${cat.id}}" class="btn btn-primary btn-sm"><i
-												class="fa-solid fa-pen-to-square  fa-1x"></i> Edit </a> 
-												
-											<a
+										<td><a th:href="@{'/admin/loadEditCategory/'+${cat.id}}"
+											class="btn btn-primary btn-sm"><i
+												class="fa-solid fa-pen-to-square  fa-1x"></i> Edit </a> <a
 											th:href="@{'/admin/deleteCategory/'+${cat.id}}"
 											class="btn btn-danger btn-sm"><i
 												class="fa-solid fa-trash  fa-1x"></i>Delete</a></td>
@@ -93,6 +92,38 @@
 
 								</tbody>
 							</table>
+
+							<div class="row">
+								<div class="col-md-4">Total Category :
+									[[${totalElements}]]</div>
+								<div class="col-md-6">
+
+									<nav aria-label="Page navigation example">
+										<ul class="pagination">
+											<li class="page-item"
+												th:classappend="${isFirst} ? 'disabled':''"><a
+												class="page-link"
+												th:href="@{'/admin/category?pageNo='+${pageNo-1}}"
+												aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+											</a></li>
+
+											<li th:each="i:${#numbers.sequence(1,totalPages)}"
+												class="page-item"
+												th:classappend="${pageNo+1==i}?'active':''" ]]><a
+												class="page-link"
+												th:href="@{'/admin/category?pageNo='+${i-1}}">[[${i}]]</a></li>
+
+											<li class="page-item"
+												th:classappend="${isLast} ? 'disabled':''"><a
+												class="page-link"
+												th:href="@{'/admin/category?pageNo='+${pageNo+1}}"
+												aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+											</a></li>
+										</ul>
+									</nav>
+								</div>
+
+							</div>
 						</div>
 					</div>
 
