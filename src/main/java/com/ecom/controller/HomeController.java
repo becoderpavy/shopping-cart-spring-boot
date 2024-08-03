@@ -11,6 +11,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -76,7 +77,16 @@ public class HomeController {
 	}
 
 	@GetMapping("/")
-	public String index() {
+	public String index(Model m) {
+
+		List<Category> allActiveCategory = categoryService.getAllActiveCategory().stream()
+				.sorted((c1,c2)->c2.getId().compareTo(c1.getId()))
+				.limit(6).toList();
+		List<Product> allActiveProducts = productService.getAllActiveProducts("").stream()
+				.sorted((p1,p2)->p2.getId().compareTo(p1.getId()))
+				.limit(8).toList();
+		m.addAttribute("category", allActiveCategory);
+		m.addAttribute("products", allActiveProducts);
 		return "index";
 	}
 
@@ -93,7 +103,8 @@ public class HomeController {
 	@GetMapping("/products")
 	public String products(Model m, @RequestParam(value = "category", defaultValue = "") String category,
 			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(name = "pageSize", defaultValue = "9") Integer pageSize, @RequestParam(defaultValue = "") String ch) {
+			@RequestParam(name = "pageSize", defaultValue = "9") Integer pageSize,
+			@RequestParam(defaultValue = "") String ch) {
 
 		List<Category> categories = categoryService.getAllActiveCategory();
 		m.addAttribute("paramValue", category);
@@ -104,8 +115,8 @@ public class HomeController {
 		Page<Product> page = null;
 		if (StringUtils.isEmpty(ch)) {
 			page = productService.getAllActiveProductPagination(pageNo, pageSize, category);
-		}else {
-			page=productService.searchActiveProductPagination(pageNo,pageSize,category,ch);
+		} else {
+			page = productService.searchActiveProductPagination(pageNo, pageSize, category, ch);
 		}
 
 		List<Product> products = page.getContent();

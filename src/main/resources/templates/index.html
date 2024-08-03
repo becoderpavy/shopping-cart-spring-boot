@@ -42,17 +42,17 @@
 		<div class="container">
 			<div class="row">
 				<p class="text-center fs-4">Category</p>
-				<div class="col-md-2">
+				<div class="col-md-2" th:each="c:${category}">
 					<div
 						class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
 						<div class="card-body text-center">
-							<img src="img/category_img/appli.png" width="65%" height="140px">
-							<p>Eelectronics</p>
+							<img th:src="@{'img/category_img/'+${c.imageName}}" width="65%" height="140px">
+							<p>[[${c.name}]]</p>
 						</div>
 					</div>
 				</div>
 
-				<div class="col-md-2">
+				<!-- <div class="col-md-2">
 					<div
 						class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
 						<div class="card-body text-center">
@@ -60,10 +60,10 @@
 							<p>Beauty</p>
 						</div>
 					</div>
-				</div>
+				</div> -->
 
 
-				<div class="col-md-2">
+				<!-- <div class="col-md-2">
 					<div
 						class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
 						<div class="card-body text-center">
@@ -72,8 +72,8 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="col-md-2">
+ -->
+				<!-- <div class="col-md-2">
 					<div
 						class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
 						<div class="card-body text-center">
@@ -81,10 +81,10 @@
 							<p>Laptop</p>
 						</div>
 					</div>
-				</div>
+				</div> -->
 
 
-				<div class="col-md-2">
+			<!-- 	<div class="col-md-2">
 					<div
 						class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
 						<div class="card-body text-center">
@@ -92,9 +92,9 @@
 							<p>Mobile</p>
 						</div>
 					</div>
-				</div>
+				</div> -->
 
-				<div class="col-md-2">
+				<!-- <div class="col-md-2">
 					<div
 						class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
 						<div class="card-body text-center">
@@ -103,7 +103,7 @@
 							<p>Grocery</p>
 						</div>
 					</div>
-				</div>
+				</div> -->
 
 
 			</div>
@@ -117,28 +117,18 @@
 			<div class="row">
 				<p class="text-center fs-4">Latest Product</p>
 
-				<div class="col-md-3">
+				<div class="col-md-3" th:each="p:${products}">
 					<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
 						<div class="card-body text-center">
-							<img alt="" src="img/product_img/laptop.jpg" class="" width="65%"
+							<img alt="" th:src="@{'img/product_img/'+${p.image}}" class="" width="65%"
 								height="140px">
-							<p class="text-center">HP Laptop</p>
+							<p class="text-center">[[${p.title}]]</p>
 						</div>
 					</div>
 				</div>
 
 
-				<div class="col-md-3">
-					<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-						<div class="card-body text-center">
-							<img alt="" src="img/product_img/laptop.jpg" class="" width="65%"
-								height="140px">
-							<p class="text-center">HP Laptop</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-3">
+			<!-- 	<div class="col-md-3">
 					<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
 						<div class="card-body text-center">
 							<img alt="" src="img/product_img/laptop.jpg" class="" width="65%"
@@ -157,6 +147,16 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="col-md-3">
+					<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+						<div class="card-body text-center">
+							<img alt="" src="img/product_img/laptop.jpg" class="" width="65%"
+								height="140px">
+							<p class="text-center">HP Laptop</p>
+						</div>
+					</div>
+				</div> -->
 
 			</div>
 		</div>
