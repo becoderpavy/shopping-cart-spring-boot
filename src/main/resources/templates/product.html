@@ -45,17 +45,17 @@
 					</div>
 				</div>
 				<div class="col-md-10">
-					<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+					<div class="card">
 						<div class="card-body">
 							<p class="fs-3 text-center">Products</p>
 							<div class="row">
 
 								<th:block th:if="${productsSize >0}">
-									<div class="col-md-3" th:each="p:${products}">
-										<div class="card">
-											<div class="card-body ">
+									<div class="col-md-3 mt-2" th:each="p:${products}">
+										<div class="card card-sh">
+											<div class="card-body text-center">
 												<img alt="" th:src="@{'/img/product_img/'+${p.image}}"
-													width="100%" height="150px">
+													width="150px" height="150px">
 												<p class="fs-5 text-center">[[${p.title}]]</p>
 												<div class="row text-center">
 													<p class="fs-6 fw-bold ">
