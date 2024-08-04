@@ -80,11 +80,9 @@ public class HomeController {
 	public String index(Model m) {
 
 		List<Category> allActiveCategory = categoryService.getAllActiveCategory().stream()
-				.sorted((c1,c2)->c2.getId().compareTo(c1.getId()))
-				.limit(6).toList();
+				.sorted((c1, c2) -> c2.getId().compareTo(c1.getId())).limit(6).toList();
 		List<Product> allActiveProducts = productService.getAllActiveProducts("").stream()
-				.sorted((p1,p2)->p2.getId().compareTo(p1.getId()))
-				.limit(8).toList();
+				.sorted((p1, p2) -> p2.getId().compareTo(p1.getId())).limit(8).toList();
 		m.addAttribute("category", allActiveCategory);
 		m.addAttribute("products", allActiveProducts);
 		return "index";
@@ -144,23 +142,29 @@ public class HomeController {
 	public String saveUser(@ModelAttribute UserDtls user, @RequestParam("img") MultipartFile file, HttpSession session)
 			throws IOException {
 
-		String imageName = file.isEmpty() ? "default.jpg" : file.getOriginalFilename();
-		user.setProfileImage(imageName);
-		UserDtls saveUser = userService.saveUser(user);
+		Boolean existsEmail = userService.existsEmail(user.getEmail());
 
-		if (!ObjectUtils.isEmpty(saveUser)) {
-			if (!file.isEmpty()) {
-				File saveFile = new ClassPathResource("static/img").getFile();
-
-				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "profile_img" + File.separator
-						+ file.getOriginalFilename());
-
-//				System.out.println(path);
-				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-			}
-			session.setAttribute("succMsg", "Register successfully");
+		if (existsEmail) {
+			session.setAttribute("errorMsg", "Email already exist");
 		} else {
-			session.setAttribute("errorMsg", "something wrong on server");
+			String imageName = file.isEmpty() ? "default.jpg" : file.getOriginalFilename();
+			user.setProfileImage(imageName);
+			UserDtls saveUser = userService.saveUser(user);
+
+			if (!ObjectUtils.isEmpty(saveUser)) {
+				if (!file.isEmpty()) {
+					File saveFile = new ClassPathResource("static/img").getFile();
+
+					Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "profile_img" + File.separator
+							+ file.getOriginalFilename());
+
+//					System.out.println(path);
+					Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				}
+				session.setAttribute("succMsg", "Register successfully");
+			} else {
+				session.setAttribute("errorMsg", "something wrong on server");
+			}
 		}
 
 		return "redirect:/register";

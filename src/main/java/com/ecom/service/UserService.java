@@ -25,13 +25,15 @@ public interface UserService {
 	public void resetAttempt(int userId);
 
 	public void updateUserResetToken(String email, String resetToken);
-	
+
 	public UserDtls getUserByToken(String token);
-	
+
 	public UserDtls updateUser(UserDtls user);
-	
-	public UserDtls updateUserProfile(UserDtls user,MultipartFile img);
-	
+
+	public UserDtls updateUserProfile(UserDtls user, MultipartFile img);
+
 	public UserDtls saveAdmin(UserDtls user);
+
+	public Boolean existsEmail(String email);
 
 }
