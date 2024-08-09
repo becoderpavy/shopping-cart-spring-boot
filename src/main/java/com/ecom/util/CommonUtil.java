@@ -4,9 +4,11 @@ import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ecom.model.ProductOrder;
 import com.ecom.model.UserDtls;
@@ -21,9 +23,18 @@ public class CommonUtil {
 
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
 	@Autowired
 	private UserService userService;
+
+	@Value("${aws.s3.bucket.category}")
+	private String categoryBucket;
+
+	@Value("${aws.s3.bucket.product}")
+	private String productBucket;
+
+	@Value("${aws.s3.bucket.profile}")
+	private String profileBucket;
 
 	public Boolean sendMail(String url, String reciepentEmail) throws UnsupportedEncodingException, MessagingException {
 
@@ -49,46 +60,59 @@ public class CommonUtil {
 
 		return siteUrl.replace(request.getServletPath(), "");
 	}
-	
-	String msg=null;;
-	
-	public Boolean sendMailForProductOrder(ProductOrder order,String status) throws Exception
-	{
-		
-		msg="<p>Hello [[name]],</p>"
-				+ "<p>Thank you order <b>[[orderStatus]]</b>.</p>"
-				+ "<p><b>Product Details:</b></p>"
-				+ "<p>Name : [[productName]]</p>"
-				+ "<p>Category : [[category]]</p>"
-				+ "<p>Quantity : [[quantity]]</p>"
-				+ "<p>Price : [[price]]</p>"
+
+	String msg = null;;
+
+	public Boolean sendMailForProductOrder(ProductOrder order, String status) throws Exception {
+
+		msg = "<p>Hello [[name]],</p>" + "<p>Thank you order <b>[[orderStatus]]</b>.</p>"
+				+ "<p><b>Product Details:</b></p>" + "<p>Name : [[productName]]</p>" + "<p>Category : [[category]]</p>"
+				+ "<p>Quantity : [[quantity]]</p>" + "<p>Price : [[price]]</p>"
 				+ "<p>Payment Type : [[paymentType]]</p>";
-		
+
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 
 		helper.setFrom("daspabitra55@gmail.com", "Shooping Cart");
 		helper.setTo(order.getOrderAddress().getEmail());
 
-		msg=msg.replace("[[name]]",order.getOrderAddress().getFirstName());
-		msg=msg.replace("[[orderStatus]]",status);
-		msg=msg.replace("[[productName]]", order.getProduct().getTitle());
-		msg=msg.replace("[[category]]", order.getProduct().getCategory());
-		msg=msg.replace("[[quantity]]", order.getQuantity().toString());
-		msg=msg.replace("[[price]]", order.getPrice().toString());
-		msg=msg.replace("[[paymentType]]", order.getPaymentType());
-		
+		msg = msg.replace("[[name]]", order.getOrderAddress().getFirstName());
+		msg = msg.replace("[[orderStatus]]", status);
+		msg = msg.replace("[[productName]]", order.getProduct().getTitle());
+		msg = msg.replace("[[category]]", order.getProduct().getCategory());
+		msg = msg.replace("[[quantity]]", order.getQuantity().toString());
+		msg = msg.replace("[[price]]", order.getPrice().toString());
+		msg = msg.replace("[[paymentType]]", order.getPaymentType());
+
 		helper.setSubject("Product Order Status");
 		helper.setText(msg, true);
 		mailSender.send(message);
 		return true;
 	}
-	
+
 	public UserDtls getLoggedInUserDetails(Principal p) {
 		String email = p.getName();
 		UserDtls userDtls = userService.getUserByEmail(email);
 		return userDtls;
 	}
-	
+
+	public String getImageUrl(MultipartFile file, Integer bucketType) {
+
+		String bucketName = null;
+
+		if (bucketType == 1) {
+			bucketName = categoryBucket;
+		} else if (bucketType == 2) {
+			bucketName = productBucket;
+		} else {
+			bucketName = profileBucket;
+		}
+		// https://shooping-cart-category.s3.amazonaws.com/mobile.jpg
+
+		String imageName = file != null ? file.getOriginalFilename() : "default.jpg";
+
+		String url = "https://" + bucketName + ".s3.amazonaws.com/" + imageName;
+		return url;
+	}
 
 }

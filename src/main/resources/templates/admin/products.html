@@ -63,7 +63,7 @@
 						<tbody>
 							<tr th:each="p,c:${products}">
 								<th scope="row">[[${c.count}]]</th>
-								<td><img th:src="@{'/img/product_img/'+${p.image}}"
+								<td><img th:src="${p.image}"
 									width="70px" height="70px"></td>
 								<td>[[${p.title}]]</td>
 								<td>[[${p.category}]]</td>

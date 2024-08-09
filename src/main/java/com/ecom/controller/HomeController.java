@@ -32,8 +32,10 @@ import com.ecom.model.Product;
 import com.ecom.model.UserDtls;
 import com.ecom.service.CartService;
 import com.ecom.service.CategoryService;
+import com.ecom.service.FileService;
 import com.ecom.service.ProductService;
 import com.ecom.service.UserService;
+import com.ecom.util.BucketType;
 import com.ecom.util.CommonUtil;
 
 import io.micrometer.common.util.StringUtils;
@@ -61,6 +63,9 @@ public class HomeController {
 
 	@Autowired
 	private CartService cartService;
+
+	@Autowired
+	private FileService fileService;
 
 	@ModelAttribute
 	public void getUserDetails(Principal p, Model m) {
@@ -147,19 +152,23 @@ public class HomeController {
 		if (existsEmail) {
 			session.setAttribute("errorMsg", "Email already exist");
 		} else {
-			String imageName = file.isEmpty() ? "default.jpg" : file.getOriginalFilename();
-			user.setProfileImage(imageName);
+			// String imageName = file.isEmpty() ? "default.jpg" :
+			// file.getOriginalFilename();
+			String imageUrl = commonUtil.getImageUrl(file, BucketType.PROFILE.getId());
+			user.setProfileImage(imageUrl);
 			UserDtls saveUser = userService.saveUser(user);
 
 			if (!ObjectUtils.isEmpty(saveUser)) {
 				if (!file.isEmpty()) {
-					File saveFile = new ClassPathResource("static/img").getFile();
+//					File saveFile = new ClassPathResource("static/img").getFile();
+//
+//					Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "profile_img" + File.separator
+//							+ file.getOriginalFilename());
+//
+////					System.out.println(path);
+//					Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-					Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "profile_img" + File.separator
-							+ file.getOriginalFilename());
-
-//					System.out.println(path);
-					Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+					fileService.uploadFileS3(file, BucketType.PROFILE.getId());
 				}
 				session.setAttribute("succMsg", "Register successfully");
 			} else {

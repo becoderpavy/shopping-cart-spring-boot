@@ -18,13 +18,22 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ecom.model.Product;
 import com.ecom.repository.ProductRepository;
+import com.ecom.service.FileService;
 import com.ecom.service.ProductService;
+import com.ecom.util.BucketType;
+import com.ecom.util.CommonUtil;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Autowired
+	private CommonUtil commonUtil;
+
+	@Autowired
+	private FileService fileService;
 
 	@Override
 	public Product saveProduct(Product product) {
@@ -64,14 +73,16 @@ public class ProductServiceImpl implements ProductService {
 
 		Product dbProduct = getProductById(product.getId());
 
-		String imageName = image.isEmpty() ? dbProduct.getImage() : image.getOriginalFilename();
+//		String imageName = image.isEmpty() ? dbProduct.getImage() : image.getOriginalFilename();
+
+		String imageUrl = commonUtil.getImageUrl(image, BucketType.PRODUCT.getId());
 
 		dbProduct.setTitle(product.getTitle());
 		dbProduct.setDescription(product.getDescription());
 		dbProduct.setCategory(product.getCategory());
 		dbProduct.setPrice(product.getPrice());
 		dbProduct.setStock(product.getStock());
-		dbProduct.setImage(imageName);
+		dbProduct.setImage(imageUrl);
 		dbProduct.setIsActive(product.getIsActive());
 		dbProduct.setDiscount(product.getDiscount());
 
@@ -87,11 +98,13 @@ public class ProductServiceImpl implements ProductService {
 			if (!image.isEmpty()) {
 
 				try {
-					File saveFile = new ClassPathResource("static/img").getFile();
+//					File saveFile = new ClassPathResource("static/img").getFile();
+//
+//					Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "product_img" + File.separator
+//							+ image.getOriginalFilename());
+//					Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-					Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "product_img" + File.separator
-							+ image.getOriginalFilename());
-					Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+					fileService.uploadFileS3(image, BucketType.PRODUCT.getId());
 
 				} catch (Exception e) {
 					e.printStackTrace();

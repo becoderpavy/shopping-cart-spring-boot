@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ecom.model.UserDtls;
 import com.ecom.repository.UserRepository;
+import com.ecom.service.FileService;
 import com.ecom.service.UserService;
 import com.ecom.util.AppConstant;
+import com.ecom.util.BucketType;
+import com.ecom.util.CommonUtil;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,6 +33,13 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	@Lazy
+	private CommonUtil commonUtil;
+
+	@Autowired
+	private FileService fileService;
 
 	@Override
 	public UserDtls saveUser(UserDtls user) {
@@ -129,7 +140,8 @@ public class UserServiceImpl implements UserService {
 		UserDtls dbUser = userRepository.findById(user.getId()).get();
 
 		if (!img.isEmpty()) {
-			dbUser.setProfileImage(img.getOriginalFilename());
+			String imageUrl = commonUtil.getImageUrl(img, BucketType.CATEGORY.getId());
+			dbUser.setProfileImage(imageUrl);
 		}
 
 		if (!ObjectUtils.isEmpty(dbUser)) {
@@ -145,13 +157,14 @@ public class UserServiceImpl implements UserService {
 
 		try {
 			if (!img.isEmpty()) {
-				File saveFile = new ClassPathResource("static/img").getFile();
-
-				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "profile_img" + File.separator
-						+ img.getOriginalFilename());
-
-//			System.out.println(path);
-				Files.copy(img.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+//				File saveFile = new ClassPathResource("static/img").getFile();
+//
+//				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "profile_img" + File.separator
+//						+ img.getOriginalFilename());
+//
+////			System.out.println(path);
+//				Files.copy(img.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				fileService.uploadFileS3(img, BucketType.PROFILE.getId());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
