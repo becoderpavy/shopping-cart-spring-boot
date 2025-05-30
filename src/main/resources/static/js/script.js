@@ -156,19 +156,16 @@ $orders.validate({
 
 			city: {
 				required: true,
-				space: true
-
+				all: true
 			},
 			state: {
 				required: true,
-
-
+				all: true
 			},
 			pincode: {
 				required: true,
 				space: true,
 				numericOnly: true
-
 			},
 			paymentType:{
 			required: true
@@ -199,24 +196,20 @@ $orders.validate({
 			address: {
 				required: 'address must be required',
 				all: 'invalid'
-
 			},
 
 			city: {
 				required: 'city must be required',
-				space: 'space not allowed'
-
+				all: 'invalid'
 			},
 			state: {
 				required: 'state must be required',
-				space: 'space not allowed'
-
+				all: 'invalid'
 			},
 			pincode: {
 				required: 'pincode must be required',
 				space: 'space not allowed',
 				numericOnly: 'invalid pincode'
-
 			},
 			paymentType:{
 			required: 'select payment type'
@@ -279,8 +272,7 @@ jQuery.validator.addMethod('lettersonly', function(value, element) {
 	jQuery.validator.addMethod('all', function(value, element) {
 		return /^[^-\s][a-zA-Z0-9_,.\s-]+$/.test(value);
 	});
-
-
+	
 	jQuery.validator.addMethod('numericOnly', function(value, element) {
 		return /^[0-9]+$/.test(value);
 	});

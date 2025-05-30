@@ -16,6 +16,7 @@ import com.ecom.model.Cart;
 import com.ecom.model.OrderAddress;
 import com.ecom.model.OrderRequest;
 import com.ecom.model.ProductOrder;
+import com.ecom.model.UserDtls;
 import com.ecom.repository.CartRepository;
 import com.ecom.repository.ProductOrderRepository;
 import com.ecom.service.OrderService;
@@ -69,7 +70,12 @@ public class OrderServiceImpl implements OrderService {
 
 			ProductOrder saveOrder = orderRepository.save(order);
 			commonUtil.sendMailForProductOrder(saveOrder, "success");
+			resetCart(cart.getUser());
 		}
+	}
+
+	private void resetCart(UserDtls user) {
+		cartRepository.deleteByUser(user);
 	}
 
 	@Override

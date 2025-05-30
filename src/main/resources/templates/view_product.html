@@ -49,7 +49,7 @@
 							Days Replacement & Return
 						</p>
 						<p class="fs-5 fw-bold">
-							Price :&nbsp; &nbsp; &nbsp; &nbsp;<i class="fas fa-rupee-sign"></i>
+							Price :&nbsp; &nbsp; &nbsp; &nbsp;<th:block th:utext="${@commnServiceImpl.rupeeSign()}"></th:block>
 							[[${product.discountPrice}]] <span
 								class="fs-6 text-decoration-line-through text-secondary">[[${product.price}]]</span>
 							<span class="fs-6  text-success">[[${product.discount}]]%
