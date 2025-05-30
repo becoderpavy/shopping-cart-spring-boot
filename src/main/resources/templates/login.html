@@ -7,7 +7,6 @@
 </head>
 <body>
 	<section>
-
 		<div class="container mt-5 p-5">
 			<div class="row">
 				<div class="col-md-6 p-5">
@@ -24,13 +23,9 @@
 									th:if="${session.SPRING_SECURITY_LAST_EXCEPTION!=null}">
 									[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
 								</th:block>
-
-
-
 							</div>
-
 							<div th:if="${param.logout}" class="alert alert-success">
-								Logout Sucessfully</div>
+								Logout Success</div>
 						</div>
 						<div class="card-body">
 							<form action="/login" method="post">
@@ -50,7 +45,7 @@
 
 						<div class="card-footer text-center">
 							<a href="/forgot-password" class="text-decoration-none">Forgot Password</a><br>
-							Don't have an account ? <a href="#" class="text-decoration-none">Create
+							Don't have an account ? <a href="register" class="text-decoration-none">Create
 								one </a>
 						</div>
 					</div>

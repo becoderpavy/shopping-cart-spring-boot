@@ -38,7 +38,7 @@
 							<tr th:each="cart,c:${carts}">
 								<th scope="row">[[${c.count}]]</th>
 								<td><img
-									th:src="@{'/img/product_img/'+${cart.product.image}}"
+									th:src="${cart.product.image}"
 									width="70px" height="70px"></td>
 								<td>[[${cart.product.title}]]</td>
 								<td>[[${cart.product.discountPrice}]]</td>
@@ -54,7 +54,7 @@
 							<tr>
 								<td colspan="4"></td>
 								<td class="fw-bold">Total Price</td>
-								<td class="fw-bold">&#8377; [[${totalOrderPrice}]]</td>
+								<td class="fw-bold"><th:block th:utext="${@commnServiceImpl.rupeeSign()}"></th:block> [[${totalOrderPrice}]]</td>
 							</tr>
 
 						</tbody>
